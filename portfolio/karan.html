@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karan S Mevada - Data Science Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Define CSS Variables for the new color palette */
+        :root {
+            --color-primary: #C3073F; /* Bright Red - Accent color for buttons, links, headings */
+            --color-primary-hover: #950740; /* Darker Red - For hover states */
+            --color-secondary: #6F2232; /* Dark Reddish Brown - For secondary elements, dark mode tags */
+
+            /* Light Mode Colors */
+            --color-background-light: #F8F8F8; /* Very Light Gray - Main background for light mode */
+            --color-text-light: #1A1A1D; /* Very Dark Gray - Text for light mode for strong contrast */
+            --color-card-light: #ffffff; /* White card background in light mode */
+            --color-border-light: #E0E0E0; /* Light Gray - Border color in light mode */
+            --color-tag-bg-light: rgba(195, 7, 63, 0.1); /* Light tint of primary for skill tags */
+            --color-tag-border-light: rgba(195, 7, 63, 0.3); /* Slightly darker tint for tag border */
+
+            /* Dark Mode Colors */
+            --color-background-dark: #1A1A1D; /* Very Dark Gray - Main background for dark mode */
+            --color-text-dark: #CDCBD6; /* Light Gray - Text color in dark mode (retained for readability) */
+            --color-card-dark: #4E4E50; /* Mid-Dark Gray - Card background in dark mode */
+            --color-border-dark: #6F2232; /* Dark Reddish Brown - Border color in dark mode */
+            --color-tag-bg-dark: #6F2232; /* Secondary color for skill tags in dark mode */
+            --color-tag-text-dark: #CDCBD6; /* Light text for skill tags in dark mode */
+            --color-tag-border-dark: #950740; /* Primary hover color for tag border in dark mode */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light mode styles */
+        .light body {
+            background-color: var(--color-background-light);
+            color: var(--color-text-light);
+        }
+        .light .card {
+            background-color: var(--color-card-light);
+            color: var(--color-text-light);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .light .header, .light .footer {
+            background-color: var(--color-card-light);
+            color: var(--color-text-light);
+        }
+        .light .nav-link:hover {
+            color: var(--color-primary);
+        }
+        .light .btn-primary {
+            background-color: var(--color-primary);
+            color: #ffffff;
+        }
+        .light .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+        }
+        .light .border-custom {
+            border-color: var(--color-border-light);
+        }
+        .light .text-custom-secondary {
+            color: var(--color-secondary);
+        }
+        .light input, .light textarea {
+            background-color: var(--color-card-light);
+            color: var(--color-text-light);
+            border-color: var(--color-border-light);
+        }
+        .light input::placeholder, .light textarea::placeholder {
+            color: var(--color-secondary);
+        }
+        .light .text-primary-color {
+            color: var(--color-primary);
+        }
+        .light .bg-tag { /* Unified tag background */
+            background-color: var(--color-tag-bg-light);
+            border: 1px solid var(--color-tag-border-light);
+        }
+        .light .text-tag { /* Unified tag text color */
+            color: var(--color-primary);
+        }
+        .light .border-primary-color {
+            border-color: var(--color-primary);
+        }
+        .light .focus-ring-primary {
+            --tw-ring-color: var(--color-primary);
+        }
+        .light .skill-category-card {
+            background-color: var(--color-card-light);
+            border: 1px solid var(--color-border-light);
+        }
+        .light .project-card-icon {
+            color: var(--color-primary);
+        }
+
+
+        /* Dark mode styles */
+        .dark body {
+            background-color: var(--color-background-dark);
+            color: var(--color-text-dark);
+        }
+        .dark .card {
+            background-color: var(--color-card-dark);
+            color: var(--color-text-dark);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark .header, .dark .footer {
+            background-color: var(--color-card-dark);
+            color: var(--color-text-dark);
+        }
+        .dark .nav-link:hover {
+            color: var(--color-primary);
+        }
+        .dark .btn-primary {
+            background-color: var(--color-primary);
+            color: #ffffff;
+        }
+        .dark .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+        }
+        .dark .border-custom {
+            border-color: var(--color-border-dark);
+        }
+        .dark .text-custom-secondary {
+            color: var(--color-text-dark);
+        }
+        .dark input, .dark textarea {
+            background-color: var(--color-border-dark);
+            color: var(--color-text-dark);
+            border-color: var(--color-border-dark);
+        }
+        .dark input::placeholder, .dark textarea::placeholder {
+            color: var(--color-text-dark);
+        }
+        .dark .text-primary-color {
+            color: var(--color-primary);
+        }
+        .dark .bg-tag { /* Unified tag background */
+            background-color: var(--color-tag-bg-dark);
+            border: 1px solid var(--color-tag-border-dark);
+        }
+        .dark .text-tag { /* Unified tag text color */
+            color: var(--color-tag-text-dark);
+        }
+        .dark .border-primary-color {
+            border-color: var(--color-primary);
+        }
+        .dark .focus-ring-primary {
+            --tw-ring-color: var(--color-primary);
+        }
+        .dark .skill-category-card {
+            background-color: var(--color-background-dark);
+            border: 1px solid var(--color-border-dark);
+        }
+        .dark .project-card-icon {
+            color: var(--color-primary);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="header shadow-sm py-4 px-6 md:px-12 sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-primary-color">Karan S Mevada</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">About</a>
+                <a href="#experience" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Experience</a>
+                <a href="#education" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Education</a>
+                <a href="#skills" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Skills</a>
+                <a href="#projects" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Projects</a>
+                <a href="#certifications" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Certifications</a>
+                <a href="#activities" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Activities</a>
+                <a href="#contact" class="nav-link text-lg font-medium hover:text-primary-color transition-colors duration-200">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus-ring-primary">
+                    <span id="sun-icon" class="hidden"><i data-lucide="sun" class="w-6 h-6 text-yellow-500"></i></span>
+                    <span id="moon-icon"><i data-lucide="moon" class="w-6 h-6 text-primary-color"></i></span>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full focus:outline-none focus:ring-2 focus-ring-primary">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden mt-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2">
+            <a href="#about" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">About</a>
+            <a href="#experience" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Experience</a>
+            <a href="#education" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Education</a>
+            <a href="#skills" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Skills</a>
+            <a href="#projects" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Projects</a>
+            <a href="#certifications" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Certifications</a>
+            <a href="#activities" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Activities</a>
+            <a href="#contact" class="block px-4 py-2 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-6 md:px-12 py-8">
+
+        <!-- Hero Section -->
+        <section id="hero" class="flex flex-col md:flex-row items-center justify-center text-center md:text-left py-16 md:py-24">
+            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12">
+                <img src="" alt="Profile Picture" class="rounded-full w-48 h-48 mx-auto md:mx-0 object-cover border-4 border-primary-color shadow-lg">
+            </div>
+            <div class="md:w-1/2">
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4 text-custom-secondary">Hi, I'm <span class="text-primary-color">Karan S Mevada</span></h1>
+                <p class="text-xl md:text-2xl text-custom-secondary mb-6">A passionate Data Science Professional</p>
+                <p class="text-lg text-custom-secondary mb-8">
+                    I'm a passionate data science professional with a strong foundation in machine learning and analytics. I love uncovering insights from data and turning them into meaningful business solutions. With hands-on experience in predictive modeling, NLP, and data visualization, I thrive on solving real-world problems with AI and data-driven strategies.
+                </p>
+                <a href="#projects" class="btn-primary inline-block font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    View My Projects
+                </a>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">About Me</h2>
+            <div class="card p-8 rounded-xl shadow-lg transition-colors duration-300">
+                <p class="text-lg leading-relaxed text-custom-secondary">
+                    As a dedicated and curious data science student, my journey began with a fascination for uncovering hidden patterns and making informed decisions from complex datasets. I possess a strong foundation in statistics, programming, and data visualization.
+                    <br><br>
+                    I have hands-on experience with Python, R, SQL, and various data science libraries including Pandas, NumPy, Scikit-learn, OpenCV, Seaborn, Beautifulsoup, and frameworks like TensorFlow/Keras for Deep Learning. I enjoy working on projects that involve data cleaning, exploratory data analysis, predictive modeling, and building interactive dashboards.
+                    <br><br>
+                    Beyond academics, I actively participate in data science competitions and workshops to
+                    continuously hone my skills and stay updated with the latest industry trends. I'm always
+                    looking for opportunities to collaborate on impactful projects and learn from experienced professionals.
+                </p>
+            </div>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section id="experience" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">Work Experience</h2>
+            <div class="card p-8 rounded-xl shadow-lg transition-colors duration-300">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-primary-color">Data Analyst</h3>
+                    <p class="text-lg text-custom-secondary">NovaNectar Services Pvt. Ltd. | Remote</p>
+                    <p class="text-md text-custom-secondary mb-3">July 2024 - August 2024</p>
+                    <ul class="list-disc list-inside text-lg text-custom-secondary space-y-2">
+                        <li>Analyzed complex datasets to uncover trends and drive business decisions.</li>
+                        <li>Created interactive dashboards in Power BI and Tableau to visualize key metrics.</li>
+                        <li>Built automated data pipelines to enhance reporting efficiency.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">Education</h2>
+            <div class="card p-8 rounded-xl shadow-lg transition-colors duration-300">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold text-primary-color">Bachelor of Science in Data Science</h3>
+                    <p class="text-lg text-custom-secondary">Ganpat University, Mahesana, Gujarat</p>
+                    <p class="text-md text-custom-secondary mb-3">June 2023 - June 2026</p>
+                    <p class="text-lg text-custom-secondary">CGPA: 8.09</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">My Expertise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Programming Languages Skill Card -->
+                <div class="skill-category-card p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="text-center mb-4">
+                        <i data-lucide="code" class="w-12 h-12 inline-block text-primary-color mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Programming Languages</h3>
+                    </div>
+                    <p class="text-sm text-custom-secondary mb-4 text-center">Strong proficiency in foundational languages for data manipulation and analysis.</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Python</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">R</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Java</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">C</span>
+                    </div>
+                </div>
+
+                <!-- Libraries & Frameworks Skill Card -->
+                <div class="skill-category-card p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="text-center mb-4">
+                        <i data-lucide="package" class="w-12 h-12 inline-block text-primary-color mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Libraries & Frameworks</h3>
+                    </div>
+                    <p class="text-sm text-custom-secondary mb-4 text-center">Experienced with essential libraries and frameworks for data science and web apps.</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Pandas</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Numpy</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Scikit-learn</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Matplotlib</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">OpenCV</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Seaborn</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Beautifulsoup</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">NLP</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Streamlit</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Flask</span>
+                    </div>
+                </div>
+
+                <!-- Machine Learning & AI Skill Card -->
+                <div class="skill-category-card p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="text-center mb-4">
+                        <i data-lucide="brain" class="w-12 h-12 inline-block text-primary-color mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Machine Learning & AI</h3>
+                    </div>
+                    <p class="text-sm text-custom-secondary mb-4 text-center">Adept at building and evaluating various predictive and generative models.</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Supervised Learning</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Unsupervised Learning</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Generative AI</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">NLP Techniques</span>
+                    </div>
+                </div>
+
+                <!-- Tools & Platforms Skill Card -->
+                <div class="skill-category-card p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="text-center mb-4">
+                        <i data-lucide="tool" class="w-12 h-12 inline-block text-primary-color mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Tools & Platforms</h3>
+                    </div>
+                    <p class="text-sm text-custom-secondary mb-4 text-center">Proficient with industry-standard tools for development, visualization, and office work.</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Jupyter Notebook</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">VS Code</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Visual Studio</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Git & GitHub</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Tableau</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Power BI</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">MS Office</span>
+                    </div>
+                </div>
+
+                <!-- Web Development Skill Card -->
+                <div class="skill-category-card p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="text-center mb-4">
+                        <i data-lucide="globe" class="w-12 h-12 inline-block text-primary-color mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Web Development</h3>
+                    </div>
+                    <p class="text-sm text-custom-secondary mb-4 text-center">Foundational knowledge in building responsive and interactive web interfaces.</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">HTML</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">CSS</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">CSS3</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">JavaScript</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">jQuery</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Bootstrap</span>
+                    </div>
+                </div>
+
+                <!-- Soft Skills Card -->
+                <div class="skill-category-card p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="text-center mb-4">
+                        <i data-lucide="users" class="w-12 h-12 inline-block text-primary-color mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Soft Skills</h3>
+                    </div>
+                    <p class="text-sm text-custom-secondary mb-4 text-center">Key interpersonal and organizational abilities for effective collaboration.</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Communication</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Time Management</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Problem-Solving</span>
+                        <span class="bg-tag text-tag px-3 py-1 rounded-full text-sm font-medium">Collaboration</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card: Profit Report -->
+                <div class="card p-6 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
+                    <div class="text-center mb-4">
+                        <i data-lucide="bar-chart-2" class="w-10 h-10 inline-block project-card-icon mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Profit Report Dashboard</h3>
+                    </div>
+                    <p class="text-custom-secondary mb-3">
+                        Built an interactive Profit Report dashboard using Power BI to help businesses track their financial performance in real time, providing valuable insights for better decision-making and strategic planning.
+                    </p>
+                    <p class="text-sm font-medium text-custom-secondary mb-4">
+                        <span class="font-bold">Tech Stack:</span> Power BI, Data Analysis, Financial Data
+                    </p>
+                    <a href="#" target="_blank" class="text-primary-color hover:underline font-medium flex items-center">
+                        View Project <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Project Card: Office Data Visualization -->
+                <div class="card p-6 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
+                    <div class="text-center mb-4">
+                        <i data-lucide="line-chart" class="w-10 h-10 inline-block project-card-icon mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Office Data Visualization</h3>
+                    </div>
+                    <p class="text-custom-secondary mb-3">
+                        Created a data visualization project using Python libraries (Pandas, NumPy, Seaborn, Matplotlib) to design interactive charts and graphs, making business metrics easier to understand for informed decisions.
+                    </p>
+                    <p class="text-sm font-medium text-custom-secondary mb-4">
+                        <span class="font-bold">Tech Stack:</span> Python, Pandas, Matplotlib, Seaborn
+                    </p>
+                    <a href="#" target="_blank" class="text-primary-color hover:underline font-medium flex items-center">
+                        View Project <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Project Card: Call Report Dashboard -->
+                <div class="card p-6 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
+                    <div class="text-center mb-4">
+                        <i data-lucide="phone" class="w-10 h-10 inline-block project-card-icon mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Call Report Dashboard</h3>
+                    </div>
+                    <p class="text-custom-secondary mb-3">
+                        Developed a Call Report dashboard using Power BI to monitor call performance and customer interactions, providing valuable insights to enhance customer support strategies and optimize communication workflows.
+                    </p>
+                    <p class="text-sm font-medium text-custom-secondary mb-4">
+                        <span class="font-bold">Tech Stack:</span> Power BI, Call Data Analysis, Customer Support
+                    </p>
+                    <a href="#" target="_blank" class="text-primary-color hover:underline font-medium flex items-center">
+                        View Project <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Project Card: Spam Message Detection -->
+                <div class="card p-6 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
+                    <div class="text-center mb-4">
+                        <i data-lucide="shield-check" class="w-10 h-10 inline-block project-card-icon mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">Spam Message Detection</h3>
+                    </div>
+                    <p class="text-custom-secondary mb-3">
+                        Developed a Spam Message Detection system using NLP techniques in Python to automatically classify messages, improving filtering accuracy and enhancing user experience.
+                    </p>
+                    <p class="text-sm font-medium text-custom-secondary mb-4">
+                        <span class="font-bold">Tech Stack:</span> Python, NLP, Machine Learning
+                    </p>
+                    <a href="https://github.com/iamkaran2026/Spam-detection" target="_blank" class="text-primary-color hover:underline font-medium flex items-center">
+                        View Project <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Project Card: AI-Resume-Analyzer -->
+                <div class="card p-6 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
+                    <div class="text-center mb-4">
+                        <i data-lucide="file-text" class="w-10 h-10 inline-block project-card-icon mb-2"></i>
+                        <h3 class="text-2xl font-semibold text-primary-color">AI-Resume-Analyzer</h3>
+                    </div>
+                    <p class="text-custom-secondary mb-3">
+                        Developed an AI-powered Resume Analyzer using NLP and ML techniques in Python to automatically evaluate and score resumes based on job relevance, streamlining the recruitment process.
+                    </p>
+                    <p class="text-sm font-medium text-custom-secondary mb-4">
+                        <span class="font-bold">Tech Stack:</span> Python, NLP, Machine Learning, AI
+                    </p>
+                    <a href="https://github.com/iamkaran2026/AI-Resume-Analyzer" target="_blank" class="text-primary-color hover:underline font-medium flex items-center">
+                        View Project <i data-lucide="external-link" class="ml-1 w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">Certifications</h2>
+            <div class="card p-8 rounded-xl shadow-lg transition-colors duration-300">
+                <ul class="list-disc list-inside text-lg text-custom-secondary space-y-2">
+                    <li>TCS iON Career Edge - Young Professional - <span class="font-semibold text-primary-color">TCS iON</span></li>
+                    <li>Introduction to Generative AI Studio - <span class="font-semibold text-primary-color">Google Cloud</span></li>
+                    <li>Building with Power BI - <span class="font-semibold text-primary-color">Microsoft</span></li>
+                    <li>Associate Data Analyst - <span class="font-semibold text-primary-color">Skill India</span></li>
+                    <li>Data Annotator - <span class="font-semibold text-primary-color">IT-ITES Sector Skill Council</span></li>
+                    <li>jQuery & Bootstrap - <span class="font-semibold text-primary-color">Udemy</span></li>
+                    <li>Excel Skills Job Simulation - <span class="font-semibold text-primary-color">JP Morgan Chase & Co.</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Activities Section -->
+        <section id="activities" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">Activities</h2>
+            <div class="card p-8 rounded-xl shadow-lg transition-colors duration-300">
+                <ul class="list-disc list-inside text-lg text-custom-secondary space-y-2">
+                    <li>
+                        <span class="font-semibold text-primary-color">Participating in Smart India Hackathon:</span>
+                        Worked with a team to solve real-world problems using technology, improving problem-solving skills and collaboration.
+                    </li>
+                    <li>
+                        <span class="font-semibold text-primary-color">Participating in Student Research Convention (GUNI-SHODH) 2024:</span>
+                        Presented research on data science and machine learning at Ganpat University, sharing ideas and refining presentation skills.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-12 md:py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 text-custom-secondary">Get In Touch</h2>
+            <div class="card p-8 rounded-xl shadow-lg transition-colors duration-300 max-w-2xl mx-auto">
+                <p class="text-lg text-center text-custom-secondary mb-8">
+                    Have a question or want to collaborate? Feel free to reach out!
+                </p>
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-lg font-medium text-custom-secondary mb-2">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name"
+                               class="w-full p-3 border border-custom rounded-lg focus:ring-2 focus-ring-primary focus:border-transparent transition-colors duration-200">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-lg font-medium text-custom-secondary mb-2">Email</label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com"
+                               class="w-full p-3 border border-custom rounded-lg focus:ring-2 focus-ring-primary focus:border-transparent transition-colors duration-200">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-lg font-medium text-custom-secondary mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Your message here..."
+                                  class="w-full p-3 border border-custom rounded-lg focus:ring-2 focus-ring-primary focus:border-transparent transition-colors duration-200"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-8 px-6 md:px-12 shadow-inner mt-8 transition-colors duration-300">
+        <div class="container mx-auto text-center text-custom-secondary">
+            <p>&copy; 2024 Karan S Mevada. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://github.com/iamkaran2026" target="_blank" class="hover:text-primary-color transition-colors duration-200">
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                </a>
+                <a href="www.linkedin.com/in/karan-mevada-19745527b" target="_blank" class="hover:text-primary-color transition-colors duration-200">
+                    <i data-lucide="linkedin" class="w-6 h-6"></i>
+                </a>
+                <!-- Removed Twitter as it was not explicitly mentioned in the resume as a professional link -->
+            </div>
+            <p class="text-sm mt-2">Email: Karanmewada26@gmail.com | Phone: (+91) 7624033238</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Function to set theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                htmlElement.classList.remove('light');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        // Check for saved theme preference on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            // Default to light mode if no theme is saved or if OS preference is dark
+            setTheme('light');
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        });
+
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
